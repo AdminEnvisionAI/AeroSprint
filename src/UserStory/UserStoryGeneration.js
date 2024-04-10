@@ -98,7 +98,7 @@ export default function HorizontalNonLinearStepper() {
           style={{background:'lightblue'}}
         >
           <Icon fontSize="medium" color="inherit" style={{fontFamily: 'none', background:'lightblue'}}>
-            {index}
+            {index+1}
           </Icon>
         </MDBox>
         <MDBox textAlign="right" lineHeight={1.25} style={{margin:'5px 5px 5px 5px'}}>
