@@ -34,9 +34,9 @@ export const fetchFileUserStoryData = async (
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("keywords", userStorySetting.keywords);
-  formData.append("industry", userStorySetting.industry);
-  formData.append("compliance", userStorySetting.compliance);
+  formData.append("keywords", "accessibility");
+  formData.append("industry", "Banking");
+  formData.append("compliance", "accessibility");
 
   try {
     const response = await axios.post(

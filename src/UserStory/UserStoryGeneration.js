@@ -17,7 +17,7 @@ import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 import MDTypography from "components/MDTypography";
 
-const steps = ['UserStory', 'Configurations', 'Generate User Story'];
+const steps = ['BRD', 'Configure', 'Generate User Story'];
 
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);

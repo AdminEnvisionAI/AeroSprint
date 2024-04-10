@@ -20,7 +20,7 @@ import Icon from "@mui/material/Icon";
 import MDTypography from "components/MDTypography";
 
 
-const steps = ['Requirement', 'Configurations', 'Generate BRD'];
+const steps = ['Initiate', 'Configure', 'Generate BRD'];
 
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
