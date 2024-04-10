@@ -4,10 +4,9 @@ import { userstoryData } from "../reduxStore/actions";
 
 const fetchData = async (query, dispatch, userStorySetting) => {
   const data = {
-    q: query,
-    keywords: [userStorySetting.keywords],
-    Industry: userStorySetting.industry,
-    compliances: [userStorySetting.compliance],
+    keywords: ["accessibility"],
+    Industry: "Banking",
+    compliances: ["accessibility"],
     format: "gherkin",
   };
 
