@@ -11,6 +11,7 @@ import fetchRequirementData, {
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { Globalcontext } from "../App";
+import Button from "@mui/material/Button";
 
 const Requirement = ({ startLoading, stopLoading }) => {
   let { file } = useContext(Globalcontext);
@@ -24,6 +25,22 @@ const Requirement = ({ startLoading, stopLoading }) => {
 
   const userRequirement = useSelector((state) => state.requirement);
   const requirementResponse = useSelector((state) => state.requirementResponse);
+
+  const handleDownload = () => {
+    if (requirementDatadgr) {
+      const blob = new Blob([requirementDatadgr], { type: 'application/msword' }); // Change MIME type for .docx
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'UserStory.docx'; // Change file name for .docx
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    else {
+      alert("No data to download");
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -89,7 +106,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 </div>
               </div>
               <div className="button_container">
-                <button>Download</button>
+              <Button variant="text" onClick={handleDownload}>Download</Button>                
               </div>
             </>
           {/* )} */}

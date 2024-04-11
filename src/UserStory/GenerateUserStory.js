@@ -6,6 +6,7 @@ import { startLoading, stopLoading } from "../reduxStore/actions";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { Globalcontext } from "../App";
+import Button from "@mui/material/Button";
 
 const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
   let { file } = useContext(Globalcontext);
@@ -18,6 +19,22 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
   const requirementResponseResp = useSelector((state) => state.requirementResponse);
+  
+  const handleDownload = () => {
+    if (requirementDatadgr) {
+      const blob = new Blob([requirementDatadgr], { type: 'application/msword' }); // Change MIME type for .docx
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'UserStory.docx'; // Change file name for .docx
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    else {
+      alert("No data to download");
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,7 +55,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
           setIsLoading(false);
         });
     }
-  }, [dispatch, file, requirementResponseResp]);
+  }, [dispatch, file, requirementResponseResp]); 
 
   return (
     <>
@@ -71,9 +88,8 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
               ></textarea>
             </div>
             <div className="button_container">
-              <button>Download</button>
-              {/* <button onClick={handleConfirm}>Confirm</button> */}
-            </div>
+            <Button variant="text" onClick={handleDownload}>Download</Button>
+            </div> 
           </div>
         </div>
       </div>
