@@ -4,6 +4,7 @@ import { userstoryData } from "../reduxStore/actions";
 
 const fetchData = async (query, dispatch, userStorySetting) => {
   const data = {
+    q: query,
     keywords: ["accessibility"],
     Industry: "Banking",
     compliances: ["accessibility"],
@@ -35,8 +36,8 @@ export const fetchFileUserStoryData = async (
   const formData = new FormData();
   formData.append("file", file);
   formData.append("keywords", "accessibility");
-  formData.append("industry", "Banking");
-  formData.append("compliance", "accessibility");
+  formData.append("Industry", "Banking");
+  formData.append("compliances", "accessibility");
 
   try {
     const response = await axios.post(

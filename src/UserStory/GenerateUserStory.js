@@ -17,6 +17,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
   const dispatch = useDispatch();
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
+  const requirementResponseResp = useSelector((state) => state.requirementResponse);
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,9 +29,8 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
         .finally(() => {
           setIsLoading(false);
         });
-    } else {
-      dispatch(startLoading());
-      fetchData(userStoryData, dispatch, userStorySetting)
+    } else if (requirementResponseResp){
+      fetchData(requirementResponseResp, dispatch, userStorySetting)
         .then((data) => {
           setUserStoryData1(data);
         })
@@ -38,7 +38,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
           setIsLoading(false);
         });
     }
-  }, [dispatch, file, startLoading, userStoryData,userStorySetting]);
+  }, [dispatch, file, requirementResponseResp]);
 
   return (
     <>

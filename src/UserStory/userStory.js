@@ -11,12 +11,13 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { Globalcontext } from "../App";
 
-const UserStory = ({ startLoading, uploadedUserstoryFile }) => {
+const UserStory = ({ startLoading, uploadedUserstoryFile, data }) => {
   let { getfile } = useContext(Globalcontext);
 
   const [storyinfo, setstoryinfo] = useState(false);
   const [selectedOption, setSelectedOption] = useState("File");
   const userstoryFile = useSelector((state) => state.uploadedUserstoryFile);
+  const userRequirementResp = useSelector((state) => state.requirementResponse);
 
   const dispatch = useDispatch();
 
@@ -58,13 +59,34 @@ const UserStory = ({ startLoading, uploadedUserstoryFile }) => {
                 </Tippy>
               </div>
             </div>
-            <div className="story-column-2">
+            {/* <div className="story-column-2">            
+              <div className="radio_subbox" style={{'width': '100%'}}>
+                <input
+                  type="radio"
+                  style={{ transform: "scale(1.3)", accentColor: "black" }}
+                  value=""
+                  checked={selectedOption === "" ? true : false}
+                  onChange={handleRadioChange}
+                ></input>
+                <h6
+                  style={{
+                    fontSize: "1.2rem",
+                    color: "gray",
+                    fontWeight: 500,
+                    marginTop: "0.3rem",
+                  }}
+                >
+                  Choose Generated Requirement - Previous STEP
+                </h6>
+              </div>
+            </div> */}
+            <div className="story-column-2">            
               <div className="radio_subbox">
                 <input
                   type="radio"
                   style={{ transform: "scale(1.3)", accentColor: "black" }}
                   value="File"
-                  checked={selectedOption}
+                  checked={selectedOption === "File" ? true : false}
                   onChange={handleRadioChange}
                 ></input>
                 <h6

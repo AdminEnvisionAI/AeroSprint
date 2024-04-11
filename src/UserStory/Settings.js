@@ -8,6 +8,9 @@ import {
 } from "../reduxStore/actions";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
+import MuiCheckbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const UserStory = () => {
   const dispatch = useDispatch();
@@ -179,16 +182,14 @@ const UserStory = () => {
                   >
                     Applicable Compliance
                   </h5>
-                  <select
-                    name="compliance"
-                    value={userStorySetting.compliance}
-                    onChange={handleChange}
-                    id="cars"
-                    style={{ width: "26%", marginLeft: "0.3rem" }}
-                  >
-                    <option>Select</option>
-                    <option>ISO 27001</option>
-                    </select>
+                <FormGroup row={true}>
+                    <FormControlLabel control={<MuiCheckbox defaultChecked />} label="ISO 27001" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="GDPR" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="WCAG 2.0 AA" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="PSD2" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="ADA" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="HIPAA" />
+                  </FormGroup>
                 </div>
               </div>
             </div>

@@ -8,7 +8,6 @@ const fetchRequirementData = async (query, context, dispatch, setting) => {
   }
   const data = {
     q: query,
-    context: context,
     keywords: [setting.keywords],
     Industry: setting.industry,
     compliances: [setting.compliance],
@@ -40,10 +39,10 @@ export const fetchFileRequirementData = async (
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("context", context);
-  formData.append("keywords", setting.keywords);
-  formData.append("industry", setting.industry);
-  formData.append("compliance", setting.compliance);
+  // formData.append("context", context);
+  formData.append("keywords", "accessibility");
+  formData.append("Industry", "Banking");
+  formData.append("compliances", "GDPR");
 
   try {
     const response = await axios.post(
