@@ -32,7 +32,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'UserStory.docx'; // Change file name for .docx
+      a.download = 'Requirement.docx'; // Change file name for .docx
       document.body.appendChild(a);
       a.click();
       URL.revokeObjectURL(url);

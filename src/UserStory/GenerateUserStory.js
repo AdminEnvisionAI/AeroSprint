@@ -21,8 +21,8 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
   const requirementResponseResp = useSelector((state) => state.requirementResponse);
   
   const handleDownload = () => {
-    if (requirementDatadgr) {
-      const blob = new Blob([requirementDatadgr], { type: 'application/msword' }); // Change MIME type for .docx
+    if (userStoryData1) {
+      const blob = new Blob([userStoryData1], { type: 'application/msword' }); // Change MIME type for .docx
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
