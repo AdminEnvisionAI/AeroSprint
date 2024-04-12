@@ -178,7 +178,7 @@ export default function HorizontalNonLinearStepper() {
         )}
       </div>
     </Box>
-    <Footer />
+    {/* <Footer /> */}
     </DashboardLayout>
   );
 }

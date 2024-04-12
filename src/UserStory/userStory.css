@@ -73,9 +73,9 @@
 .story-column-4 .keywords_box input {
   width: 100%;
   outline: none;
-  border: solid 1px rgba(53, 52, 52, 0.7);
+  /* border: solid 1px rgba(53, 52, 52, 0.7); */
   border-radius: 3px;
-  margin-left: 1.3rem;
+  /* margin-left: 1.3rem; */
 }
 .story-column-4 .keywords_box select {
   width: 100%;

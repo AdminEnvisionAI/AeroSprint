@@ -129,3 +129,12 @@
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   z-index: 100; /* Ensure the overlay is on top of other content */
 }
+
+.muiselect {
+    width: 65%;
+    margin-left: 0.3rem;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill=\"black\" viewBox=\"0 0 8 8\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0l4 4 4-4H0z\"/></svg>');    background-repeat: no-repeat;
+    background-position: right .4em top 50%;
+    background-size: .65em auto;
+}
