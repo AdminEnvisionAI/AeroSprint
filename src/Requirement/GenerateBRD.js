@@ -27,19 +27,30 @@ const Requirement = ({ startLoading, stopLoading }) => {
   const requirementResponse = useSelector((state) => state.requirementResponse);
 
   const handleDownload = () => {
-    if (requirementDatadgr) {
-      const blob = new Blob([requirementDatadgr], { type: 'application/msword' }); // Change MIME type for .docx
+    try{
+    if (requirementResponse) {
+      const blob = new Blob([requirementResponse], { type: 'application/msword' }); // Change MIME type for .docx
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Requirement.docx'; // Change file name for .docx
+      a.download = 'BRD.docx'; // Change file name for .docx
       document.body.appendChild(a);
-      a.click();
+      // Check if the browser is Safari on iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        // Open the URL in a new tab for iOS Safari
+        window.open(url, '_blank');
+      } else {
+        // Trigger download for other browsers
+        a.click();
+      }
       URL.revokeObjectURL(url);
-    }
-    else {
+    } else {
       alert("No data to download");
     }
+  } catch (error) {
+    console.error("An error occurred during the download process: ", error);
+  }
   }
 
   useEffect(() => {
@@ -102,6 +113,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                     rows="8"
                     style={{ width: "100%", maxWidth: "100%" }}
                     value={requirementResponse}
+                    onChange={()=>{}}
                   ></textarea>
                 </div>
               </div>

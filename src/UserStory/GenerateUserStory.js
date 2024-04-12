@@ -19,22 +19,49 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
   const requirementResponseResp = useSelector((state) => state.requirementResponse);
-  
+
+  // const handleDownload = () => {
+  //   if (userStoryData) {
+  //     const blob = new Blob([userStoryData], { type: 'application/msword' }); // Change MIME type for .docx
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = 'UserStory.docx'; // Change file name for .docx
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     URL.revokeObjectURL(url);
+  //   }
+  //   else {
+  //     alert("No data to download");
+  //   }
+  // }
+
   const handleDownload = () => {
-    if (userStoryData1) {
-      const blob = new Blob([userStoryData1], { type: 'application/msword' }); // Change MIME type for .docx
+    try{
+    if (userStoryData) {
+      const blob = new Blob([userStoryData], { type: 'application/msword' }); // Change MIME type for .docx
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = 'UserStory.docx'; // Change file name for .docx
       document.body.appendChild(a);
-      a.click();
+      // Check if the browser is Safari on iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        // Open the URL in a new tab for iOS Safari
+        window.open(url, '_blank');
+      } else {
+        // Trigger download for other browsers
+        a.click();
+      }
       URL.revokeObjectURL(url);
-    }
-    else {
+    } else {
       alert("No data to download");
     }
+  } catch (error) {
+    console.error("An error occurred during the download process: ", error);
   }
+}
 
   useEffect(() => {
     setIsLoading(true);
@@ -85,6 +112,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
                 rows={10}
                 style={{ width: "100%" }}
                 value={userStoryData}
+                onChange={()=>{}}
               ></textarea>
             </div>
             <div className="button_container">
