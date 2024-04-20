@@ -7,6 +7,7 @@ import {
 import { connect, useDispatch, useSelector } from "react-redux";
 import fetchRequirementData, {
   fetchFileRequirementData,
+  fetchRequirementsFromFilePath,
 } from "./requirementServices";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -26,31 +27,63 @@ const Requirement = ({ startLoading, stopLoading }) => {
   const userRequirement = useSelector((state) => state.requirement);
   const requirementResponse = useSelector((state) => state.requirementResponse);
 
+  // const handleDownload = () => {
+  //   try{
+  //   if (requirementResponse) {
+  //     const blob = new Blob([requirementResponse], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }); // Change MIME type for .docx
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = 'BRD.docx'; // Change file name for .docx
+  //     document.body.appendChild(a);
+  //     // Check if the browser is Safari on iOS
+  //     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  //     if (isIOS) {
+  //       // Open the URL in a new tab for iOS Safari
+  //       window.open(url, '_blank');
+  //     } else {
+  //       // Trigger download for other browsers
+  //       a.click();
+  //     }
+  //     URL.revokeObjectURL(url);
+  //   } else {
+  //     alert("No data to download");
+  //   }
+  // } catch (error) {
+  //   console.error("An error occurred during the download process: ", error);
+  // }
+  // }
   const handleDownload = () => {
-    try{
-    if (requirementResponse) {
-      const blob = new Blob([requirementResponse], { type: 'application/msword' }); // Change MIME type for .docx
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'BRD.docx'; // Change file name for .docx
-      document.body.appendChild(a);
-      // Check if the browser is Safari on iOS
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      if (isIOS) {
-        // Open the URL in a new tab for iOS Safari
-        window.open(url, '_blank');
+    try {
+      if (requirementResponse) {
+        // Ensure requirementResponse is properly encoded as UTF-8
+        const utf8Data = unescape(encodeURIComponent(requirementResponse));
+        const blob = new Blob([utf8Data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'BRD.docx';
+        document.body.appendChild(a);
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          // For Safari on iOS, trigger the download by simulating a click
+          const clickEvent = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: false
+          });
+          a.dispatchEvent(clickEvent);
+        } else {
+          // For other browsers, trigger the download directly
+          a.click();
+        }
+        URL.revokeObjectURL(url);
       } else {
-        // Trigger download for other browsers
-        a.click();
+        alert("No data to download");
       }
-      URL.revokeObjectURL(url);
-    } else {
-      alert("No data to download");
+    } catch (error) {
+      console.error("An error occurred during the download process: ", error);
     }
-  } catch (error) {
-    console.error("An error occurred during the download process: ", error);
-  }
   }
 
   useEffect(() => {
@@ -65,7 +98,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
           setIsLoading(false);
         });
     } else {
-      fetchFileRequirementData(file, context, dispatch, setting) // Updated the parameter to use the value from the textarea
+      fetchRequirementsFromFilePath(file, context, dispatch, setting) // Updated the parameter to use the value from the textarea
         .then((data) => {
           setRequirementDatadgr(data);
           setIsLoading(false);

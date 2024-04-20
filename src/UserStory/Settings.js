@@ -196,6 +196,9 @@ const UserStory = () => {
                     <FormControlLabel  control={<MuiCheckbox />} label="PSD2" />
                     <FormControlLabel  control={<MuiCheckbox />} label="ADA" />
                     <FormControlLabel  control={<MuiCheckbox />} label="HIPAA" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="RBI" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="NIPL" />
+                    <FormControlLabel  control={<MuiCheckbox />} label="NPCL" />
                   </FormGroup>
                 </div>
               </div>

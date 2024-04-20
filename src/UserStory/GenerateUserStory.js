@@ -39,7 +39,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
   const handleDownload = () => {
     try{
     if (userStoryData) {
-      const blob = new Blob([userStoryData], { type: 'application/msword' }); // Change MIME type for .docx
+      const blob = new Blob([userStoryData], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }); // Change MIME type for .docx
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
