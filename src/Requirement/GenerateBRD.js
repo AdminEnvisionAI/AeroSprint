@@ -98,7 +98,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
           setIsLoading(false);
         });
     } else {
-      fetchRequirementsFromFilePath(file, context, dispatch, setting) // Updated the parameter to use the value from the textarea
+      fetchFileRequirementData(file, context, dispatch, setting) // Updated the parameter to use the value from the textarea
         .then((data) => {
           setRequirementDatadgr(data);
           setIsLoading(false);

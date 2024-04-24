@@ -29,7 +29,10 @@ const Requirement = ({ startLoading, stopLoading }) => {
     domain: "",
     subdomain: "",
     corearea: "",
-    compliance: ""
+    compliance: "",
+    keywords: "",
+    domain: "",
+    configurations:""
   });
 
   const handleChange = (event) => {
@@ -91,7 +94,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   </h5>
                   <Select
                     name="domain"
-                    // value={setting.industry}
+                    value={setting.domain}
                     onChange={handleChange}
                     id="cars"
                     className="muiselect"
@@ -118,6 +121,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                     onChange={handleChange}
                     id="cars"
                     className="muiselect"
+                    value={setting.subdomain}
                   >
                     <MenuItem value="Select">Select</MenuItem>
                     <MenuItem value="Retail Banking">Retail Banking</MenuItem>

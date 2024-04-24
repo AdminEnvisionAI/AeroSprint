@@ -11,9 +11,13 @@ const initialState = {
     compliance: [],
   },
   userStorySetting: {
-    keywords: [],
-    industry: "",
-    compliance: [],
+    keywords: null,
+    industry: null,
+    compliance: null,
+    corearea: null,
+    subdomain: null,
+    domain: null,
+    configurations: null
   },
   requirementResponse: "",
   // Add more state properties for user story here as needed

@@ -18,35 +18,36 @@ import MenuItem from "@mui/material/MenuItem";
 const UserStory = () => {
   const dispatch = useDispatch();
   const [settinginfo, setsettinginfo] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    keywords: [],
     industry: "",
-    compliance: [],
+    domain: "",
+    subdomain: "",
     corearea: "",
+    compliance: "",
+    keywords: "",
+    configurations:""
   });
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
 
   const industryOptions = [
-    { value: "Banking", label: "Banking" },
-    { value: "Insurance", label: "Insurance" },
-    // add more options as needed
+    { value: "BFSI", label: "BFSI" },
   ];
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
   }
-  console.log('formData ', formData)
+  
   dispatch(userStorySettingData(formData));
   return (
     // <div>
       <div className="container">
         <div className="row gx-0">
           <div className="col-12 story-column">
-            {isLoading && <div className="overlay"></div>}
-            {isLoading && <div className="loader"></div>}
             <div className="story-column-3">
               <div className="text_circle_box">
                 <h5 className="import_story_text">Configurations</h5>
@@ -72,16 +73,19 @@ const UserStory = () => {
                 >
                   Industry
                 </h5>
-                <Select
-                    name="industry"
-                    value={formData.industry}
-                    onChange={handleChange}
-                    id="cars"
-                    style={{ width: "29.4%" }}
-                    className="muiselect"
-                  >
-                    <MenuItem value={0}>Select</MenuItem>
-                    <MenuItem value={"BFSI"}>BFSI</MenuItem>
+                  <Select
+                        name="industry"
+                        value={formData.industry || userStorySetting.industry}
+                        onChange={(event) => handleChange(event)}
+                        style={{ width: "29.4%" }}
+                        className="muiselect"
+                      >
+                        <MenuItem value={0}>Select</MenuItem>
+                        {industryOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
                   </Select>
               </div>
                 <div className="keywords_box">
@@ -93,9 +97,8 @@ const UserStory = () => {
                   </h5>
                   <Select
                     name="domain"
-                    // value={setting.industry}
-                    onChange={handleChange}
-                    id="cars"
+                    value={userStorySetting.domain || formData.domain}
+                    onChange={(event) => handleChange(event)}
                     className="muiselect"
                     style={{ width: "65%", marginLeft: "4%" }}
                   >
@@ -116,10 +119,10 @@ const UserStory = () => {
                     Sub Domain
                   </h5>
                   <Select
-                    name="domain"
+                    name="subdomain"
+                    value={userStorySetting.subdomain || formData.subdomain}
                     onChange={handleChange}
-                    id="cars"
-                    className="muiselect"
+                    className="muiselect"                    
                   >
                     <MenuItem value="Select">Select</MenuItem>
                     <MenuItem value="Retail Banking">Retail Banking</MenuItem>
@@ -155,9 +158,8 @@ const UserStory = () => {
                   <Select
                   type="select"
                     name="corearea"
-                    value={formData.corearea}
+                    value={userStorySetting.corearea}
                     onChange={handleChange}
-                    id="cars"
                     className="muiselect"
                     style={{ width: "65%", marginLeft: "0.3rem" }}
                   >
@@ -226,6 +228,7 @@ const mapStateToProps = (state) => {
     data: state.requirementResponse,
     uploadedUserstoryFile: state.uploadedUserstoryFile,
     loading: state.loading,
+    userStorySetting: state.userStorySetting,
   };
 };
 
