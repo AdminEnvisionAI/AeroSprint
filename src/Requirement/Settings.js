@@ -49,23 +49,14 @@ const Requirement = ({ startLoading, stopLoading }) => {
     setSelectedLabels(updatedLabels);
 
     // Store updatedLabels in local storage
-    localStorage.setItem("selectedLabelsRequirement", JSON.stringify(updatedLabels));
 
     dispatch(
       requirementSettingData({
         ...requirementSetting,
-        compliance: updatedLabels.join(","),
+        compliance: updatedLabels,
       })
     );
   };
-
-  // Load selectedLabels from local storage on component mount
-  useEffect(() => {
-    const storedLabels = localStorage.getItem("selectedLabelsRequirement");
-    if (storedLabels) {
-      setSelectedLabels(JSON.parse(storedLabels));
-    }
-  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -78,7 +69,12 @@ const Requirement = ({ startLoading, stopLoading }) => {
   };
   const requirementSetting = useSelector((state) => state.requirementSetting);
 
-  const complianceLabels = useSelector((state) => state.requirementSetting.compliance.split(","));
+  const complianceLabels = useSelector((state) => state.requirementSetting.compliance);
+  useEffect(() => {
+    if (complianceLabels) {
+      setSelectedLabels(complianceLabels);
+    }
+  }, []);
 
   useEffect(() => {
     setFormData(requirementSetting);
