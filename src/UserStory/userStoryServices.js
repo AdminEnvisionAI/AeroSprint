@@ -3,11 +3,15 @@ import axios from "axios";
 import { userstoryData } from "../reduxStore/actions";
 
 const fetchData = async (query, dispatch, userStorySetting) => {
+  console.log('userStorySetting ', userStorySetting)
   const data = {
     q: query,
-    keywords: ["accessibility"],
-    Industry: "Banking",
-    compliances: ["accessibility"],
+    keywords: userStorySetting.keywords,
+    industry: userStorySetting.industry,
+    compliances: userStorySetting.compliances,
+    domain: userStorySetting.domain,
+    subdomain: userStorySetting.subdomain,
+    corearea: userStorySetting.corearea,
     format: "gherkin",
   };
 
@@ -33,11 +37,21 @@ export const fetchFileUserStoryData = async (
     return;
   }
 
+  console.log('userStorySetting ', userStorySetting)
+
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("keywords", "accessibility");
-  formData.append("Industry", "Banking");
-  formData.append("compliances", "accessibility");
+  // formData.append("keywords", "accessibility");
+  // formData.append("industry", "Banking");
+  // formData.append("compliances", "accessibility");
+
+  formData.append("keywords", userStorySetting.keywords);
+  formData.append("industry", userStorySetting.industry);
+  formData.append("compliances", userStorySetting.compliances);
+
+  formData.append("domain", userStorySetting.domain);
+  formData.append("subdomain", userStorySetting.subdomain);
+  formData.append("corearea", userStorySetting.corearea);
 
   try {
     const response = await axios.post(
@@ -59,18 +73,22 @@ export const fetchRequirementsFromFilePath = async (
   file,
   context,
   dispatch,
-  setting
+  userStorySetting
 ) => {
   if (!file) {
     return;
   }
-
+  
+  console.log('userStorySetting ', userStorySetting)
   const formData = new FormData();
   formData.append("file", file);
-  // formData.append("context", context);
-  formData.append("keywords", "accessibility");
-  formData.append("Industry", "Banking");
-  formData.append("compliances", "GDPR");
+  formData.append("keywords", userStorySetting.keywords);
+  formData.append("industry", userStorySetting.industry);
+  formData.append("compliances", userStorySetting.compliance);
+
+  formData.append("domain", userStorySetting.domain);
+  formData.append("subdomain", userStorySetting.subdomain);
+  formData.append("corearea", userStorySetting.corearea);
 
   try {
     const response = await axios.post(
@@ -82,7 +100,7 @@ export const fetchRequirementsFromFilePath = async (
         },
       }
     );
-    dispatch(requirementResponse(response.data.message));
+    dispatch(userstoryData(response.data.message));
   } catch (error) {
     // handle error
     console.log(error);

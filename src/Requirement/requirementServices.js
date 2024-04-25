@@ -8,9 +8,12 @@ const fetchRequirementData = async (query, context, dispatch, setting) => {
   }
   const data = {
     q: query,
-    keywords: [setting.keywords],
-    Industry: setting.industry,
-    compliances: [setting.compliance],
+    keywords: setting.keywords,
+    industry: setting.industry,
+    compliances: setting.compliance,
+    domain: setting.domain,
+    subdomain: setting.subdomain,
+    corearea: setting.corearea,
     format: "gherkin",
   };
 
@@ -40,9 +43,16 @@ export const fetchFileRequirementData = async (
   const formData = new FormData();
   formData.append("file", file);
   // formData.append("context", context);
-  formData.append("keywords", "accessibility");
-  formData.append("Industry", "Banking");
-  formData.append("compliances", "GDPR");
+  formData.append("keywords", setting.keywords);
+  // formData.append("industry", "Banking");
+  // formData.append("compliances", "GDPR");
+
+  formData.append("industry", setting.industry);
+  formData.append("compliances", setting.compliances);
+
+  formData.append("domain", setting.domain);
+  formData.append("subdomain", setting.subdomain);
+  formData.append("corearea", setting.corearea);
 
   try {
     const response = await axios.post(
