@@ -17,7 +17,16 @@ const initialState = {
     corearea: null,
     subdomain: null,
     domain: null,
-    configurations: null
+    configurations: null,
+  },
+  requirementSetting: {
+    keywords: null,
+    industry: null,
+    compliance: null,
+    corearea: null,
+    subdomain: null,
+    domain: null,
+    configurations: null,
   },
   requirementResponse: "",
   // Add more state properties for user story here as needed
@@ -82,6 +91,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userStorySetting: action.payload, // Merge new data with existing data
+      };
+    case ActionTypes.REQUIREMENT_SETTING_DATA:
+      return {
+        ...state,
+        requirementSetting: action.payload, // Merge new data with existing data
       };
 
     default:

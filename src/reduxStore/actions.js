@@ -9,9 +9,11 @@ export const ActionTypes = {
   START_LOADING: "START_LOADING",
   STOP_LOADING: "STOP_LOADING",
   SETTING_DATA: "SETTING_DATA",
-  
+
   // User Story State
   USERSTORY_SETTING_DATA: "USERSTORY_SETTING_DATA",
+  REQUIREMENT_SETTING_DATA: "REQUIREMENT_SETTING_DATA",
+
   US_INDUSTRY: "US_INDUSTRY",
   US_DOMAIN: "US_DOMAIN",
   US_SUBDOMAIN: "US_SUBDOMAIN",
@@ -56,6 +58,10 @@ export const userStorySettingData = (data) => ({
   type: ActionTypes.USERSTORY_SETTING_DATA,
   payload: data,
 });
+export const requirementSettingData = (data) => ({
+  type: ActionTypes.REQUIREMENT_SETTING_DATA,
+  payload: data,
+});
 export const uploadedRequirementFile = (file) => {
   if (file) {
     return {
@@ -79,41 +85,41 @@ export const US_INDUSTRY = (data) => {
     type: ActionTypes.US_INDUSTRY,
     payload: data,
   };
-}
+};
 
 export const US_DOMAIN = (data) => {
   return {
     type: ActionTypes.US_DOMAIN,
     payload: data,
   };
-}
+};
 export const US_SUBDOMAIN = (data) => {
   return {
     type: ActionTypes.US_SUBDOMAIN,
     payload: data,
   };
-}
+};
 export const US_COREAREA = (data) => {
   return {
     type: ActionTypes.US_COREAREA,
     payload: data,
   };
-}
-export const US_COMPLIANCE= (data) => {
+};
+export const US_COMPLIANCE = (data) => {
   return {
     type: ActionTypes.US_COMPLIANCE,
     payload: data,
   };
-}
-export const US_KEYWORDS= (data) => {
+};
+export const US_KEYWORDS = (data) => {
   return {
     type: ActionTypes.US_KEYWORDS,
     payload: data,
   };
-}
-export const US_CONFIGURATIONS= (data) => {
+};
+export const US_CONFIGURATIONS = (data) => {
   return {
     type: ActionTypes.US_CONFIGURATIONS,
     payload: data,
   };
-}
+};
