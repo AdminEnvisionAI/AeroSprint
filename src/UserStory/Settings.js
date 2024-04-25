@@ -10,22 +10,56 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Text from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
 
 const UserStory = () => {
   const dispatch = useDispatch();
   const [settinginfo, setsettinginfo] = useState(false);
+  const [selectedLabels, setSelectedLabels] = useState([]);
+
   // const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     industry: "",
     domain: "",
     subdomain: "",
     corearea: "",
-    compliance: "",
+    compliance: [],
+
     keywords: "",
-    configurations: "",
   });
   const industryOptions = [{ value: "BFSI", label: "BFSI" }];
+  const handleCheckboxChange = (event) => {
+    const label = event.target.name;
+    const isChecked = event.target.checked;
 
+    let updatedLabels;
+
+    if (isChecked) {
+      updatedLabels = [...selectedLabels, label];
+    } else {
+      updatedLabels = selectedLabels.filter((prevLabel) => prevLabel !== label);
+    }
+
+    setSelectedLabels(updatedLabels);
+
+    // Store updatedLabels in local storage
+    localStorage.setItem("selectedLabelsStory", JSON.stringify(updatedLabels));
+
+    dispatch(
+      userStorySettingData({
+        ...userStorySetting,
+        compliance: updatedLabels.join(","),
+      })
+    );
+  };
+
+  // Load selectedLabels from local storage on component mount
+  useEffect(() => {
+    const storedLabels = localStorage.getItem("selectedLabelsStory");
+    if (storedLabels) {
+      setSelectedLabels(JSON.parse(storedLabels));
+    }
+  }, []);
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(
@@ -37,6 +71,7 @@ const UserStory = () => {
   };
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
+  const complianceLabels = useSelector((state) => state.userStorySetting.compliance.split(","));
 
   useEffect(() => {
     setFormData(userStorySetting);
@@ -189,15 +224,97 @@ const UserStory = () => {
                   Applicable Compliance
                 </h5>
                 <FormGroup row={true}>
-                  <FormControlLabel control={<MuiCheckbox defaultChecked />} label="ISO 27001" />
-                  <FormControlLabel control={<MuiCheckbox />} label="GDPR" />
-                  <FormControlLabel control={<MuiCheckbox />} label="WCAG 2.0 AA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="PSD2" />
-                  <FormControlLabel control={<MuiCheckbox />} label="ADA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="HIPAA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="RBI" />
-                  <FormControlLabel control={<MuiCheckbox />} label="NIPL" />
-                  <FormControlLabel control={<MuiCheckbox />} label="NPCL" />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("ISO 27001")}
+                        onChange={handleCheckboxChange}
+                        name="ISO 27001"
+                      />
+                    }
+                    label="ISO 27001"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("GDPR")}
+                        onChange={handleCheckboxChange}
+                        name="GDPR"
+                      />
+                    }
+                    label="GDPR"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("WCAG 2.0 AA")}
+                        onChange={handleCheckboxChange}
+                        name="WCAG 2.0 AA"
+                      />
+                    }
+                    label="WCAG 2.0 AA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("PSD2")}
+                        onChange={handleCheckboxChange}
+                        name="PSD2"
+                      />
+                    }
+                    label="PSD2"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("ADA")}
+                        onChange={handleCheckboxChange}
+                        name="ADA"
+                      />
+                    }
+                    label="ADA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("HIPAA")}
+                        onChange={handleCheckboxChange}
+                        name="HIPAA"
+                      />
+                    }
+                    label="HIPAA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("RBI")}
+                        onChange={handleCheckboxChange}
+                        name="RBI"
+                      />
+                    }
+                    label="RBI"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("NIPL")}
+                        onChange={handleCheckboxChange}
+                        name="NIPL"
+                      />
+                    }
+                    label="NIPL"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("NPCL")}
+                        onChange={handleCheckboxChange}
+                        name="NPCL"
+                      />
+                    }
+                    label="NPCL"
+                  />
+                  {/* Add more checkboxes as needed */}
                 </FormGroup>
               </div>
             </div>
@@ -206,7 +323,13 @@ const UserStory = () => {
                 <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "17%" }}>
                   Keywords
                 </h5>
-                <Text type="input" style={{ width: "40%", marginLeft: "0.0rem" }} />
+                <Text
+                  name="keywords"
+                  onChange={(event) => handleChange(event)}
+                  type="input"
+                  style={{ width: "40%", marginLeft: "0.0rem" }}
+                  value={userStorySetting?.keywords || formData?.keywords}
+                />
               </div>
             </div>
           </div>

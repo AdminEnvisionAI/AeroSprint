@@ -17,9 +17,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Text from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
 
 const Requirement = ({ startLoading, stopLoading }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedLabels, setSelectedLabels] = useState([]);
 
   const dispatch = useDispatch();
   const [settinginfo, setsettinginfo] = useState(false);
@@ -28,27 +30,59 @@ const Requirement = ({ startLoading, stopLoading }) => {
     domain: "",
     subdomain: "",
     corearea: "",
-    compliance: "",
+    compliance: [],
     keywords: "",
-    configurations: "",
   });
   const industryOptions = [{ value: "BFSI", label: "BFSI" }];
+  const handleCheckboxChange = (event) => {
+    const label = event.target.name;
+    const isChecked = event.target.checked;
+
+    let updatedLabels;
+
+    if (isChecked) {
+      updatedLabels = [...selectedLabels, label];
+    } else {
+      updatedLabels = selectedLabels.filter((prevLabel) => prevLabel !== label);
+    }
+
+    setSelectedLabels(updatedLabels);
+
+    // Store updatedLabels in local storage
+    localStorage.setItem("selectedLabelsRequirement", JSON.stringify(updatedLabels));
+
+    dispatch(
+      requirementSettingData({
+        ...requirementSetting,
+        compliance: updatedLabels.join(","),
+      })
+    );
+  };
+
+  // Load selectedLabels from local storage on component mount
+  useEffect(() => {
+    const storedLabels = localStorage.getItem("selectedLabelsRequirement");
+    if (storedLabels) {
+      setSelectedLabels(JSON.parse(storedLabels));
+    }
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(
       requirementSettingData({
-        ...userStorySetting,
+        ...requirementSetting,
         [name]: value,
       })
     );
   };
+  const requirementSetting = useSelector((state) => state.requirementSetting);
 
-  const userStorySetting = useSelector((state) => state.requirementSetting);
+  const complianceLabels = useSelector((state) => state.requirementSetting.compliance.split(","));
 
   useEffect(() => {
-    setFormData(userStorySetting);
-  }, [userStorySetting]);
+    setFormData(requirementSetting);
+  }, [requirementSetting]);
 
   return (
     // <div>
@@ -79,7 +113,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 </h5>
                 <Select
                   name="industry"
-                  value={formData?.industry || userStorySetting?.industry}
+                  value={formData?.industry || requirementSetting?.industry}
                   onChange={(event) => handleChange(event)}
                   style={{ width: "29.4%" }}
                   className="muiselect"
@@ -98,7 +132,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 </h5>
                 <Select
                   name="domain"
-                  value={userStorySetting?.domain || formData?.domain}
+                  value={requirementSetting?.domain || formData?.domain}
                   onChange={(event) => handleChange(event)}
                   className="muiselect"
                   style={{ width: "65%", marginLeft: "4%" }}
@@ -118,7 +152,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 </h5>
                 <Select
                   name="subdomain"
-                  value={userStorySetting?.subdomain || formData?.subdomain}
+                  value={requirementSetting?.subdomain || formData?.subdomain}
                   onChange={handleChange}
                   className="muiselect"
                 >
@@ -159,7 +193,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 <Select
                   type="select"
                   name="corearea"
-                  value={userStorySetting?.corearea || formData?.corearea}
+                  value={requirementSetting?.corearea || formData?.corearea}
                   onChange={handleChange}
                   className="muiselect"
                   style={{ width: "65%", marginLeft: "0.3rem" }}
@@ -198,15 +232,97 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   Applicable Compliance
                 </h5>
                 <FormGroup row={true}>
-                  <FormControlLabel control={<MuiCheckbox defaultChecked />} label="ISO 27001" />
-                  <FormControlLabel control={<MuiCheckbox />} label="GDPR" />
-                  <FormControlLabel control={<MuiCheckbox />} label="WCAG 2.0 AA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="PSD2" />
-                  <FormControlLabel control={<MuiCheckbox />} label="ADA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="HIPAA" />
-                  <FormControlLabel control={<MuiCheckbox />} label="RBI" />
-                  <FormControlLabel control={<MuiCheckbox />} label="NIPL" />
-                  <FormControlLabel control={<MuiCheckbox />} label="NPCL" />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("ISO 27001")}
+                        onChange={handleCheckboxChange}
+                        name="ISO 27001"
+                      />
+                    }
+                    label="ISO 27001"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("GDPR")}
+                        onChange={handleCheckboxChange}
+                        name="GDPR"
+                      />
+                    }
+                    label="GDPR"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("WCAG 2.0 AA")}
+                        onChange={handleCheckboxChange}
+                        name="WCAG 2.0 AA"
+                      />
+                    }
+                    label="WCAG 2.0 AA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("PSD2")}
+                        onChange={handleCheckboxChange}
+                        name="PSD2"
+                      />
+                    }
+                    label="PSD2"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("ADA")}
+                        onChange={handleCheckboxChange}
+                        name="ADA"
+                      />
+                    }
+                    label="ADA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("HIPAA")}
+                        onChange={handleCheckboxChange}
+                        name="HIPAA"
+                      />
+                    }
+                    label="HIPAA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("RBI")}
+                        onChange={handleCheckboxChange}
+                        name="RBI"
+                      />
+                    }
+                    label="RBI"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("NIPL")}
+                        onChange={handleCheckboxChange}
+                        name="NIPL"
+                      />
+                    }
+                    label="NIPL"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={complianceLabels.includes("NPCL")}
+                        onChange={handleCheckboxChange}
+                        name="NPCL"
+                      />
+                    }
+                    label="NPCL"
+                  />
+                  {/* Add more checkboxes as needed */}
                 </FormGroup>
               </div>
             </div>
@@ -215,7 +331,13 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "17%" }}>
                   Keywords
                 </h5>
-                <Text type="input" style={{ width: "40%", marginLeft: "0.0rem" }} />
+                <Text
+                  name="keywords"
+                  onChange={(event) => handleChange(event)}
+                  type="input"
+                  style={{ width: "40%", marginLeft: "0.0rem" }}
+                  value={requirementSetting?.keywords || formData?.keywords}
+                />
               </div>
             </div>
           </div>

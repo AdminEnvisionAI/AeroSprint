@@ -17,7 +17,6 @@ const initialState = {
     corearea: null,
     subdomain: null,
     domain: null,
-    configurations: null,
   },
   requirementSetting: {
     keywords: null,
@@ -26,7 +25,6 @@ const initialState = {
     corearea: null,
     subdomain: null,
     domain: null,
-    configurations: null,
   },
   requirementResponse: "",
   // Add more state properties for user story here as needed
@@ -93,6 +91,7 @@ const rootReducer = (state = initialState, action) => {
         userStorySetting: action.payload, // Merge new data with existing data
       };
     case ActionTypes.REQUIREMENT_SETTING_DATA:
+      console.log("kunalpay", action.payload);
       return {
         ...state,
         requirementSetting: action.payload, // Merge new data with existing data
