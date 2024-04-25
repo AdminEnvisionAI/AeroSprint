@@ -24,7 +24,6 @@ const UserStory = () => {
     subdomain: "",
     corearea: "",
     compliance: [],
-
     keywords: "",
   });
   const industryOptions = [{ value: "BFSI", label: "BFSI" }];
@@ -43,23 +42,15 @@ const UserStory = () => {
     setSelectedLabels(updatedLabels);
 
     // Store updatedLabels in local storage
-    localStorage.setItem("selectedLabelsStory", JSON.stringify(updatedLabels));
 
     dispatch(
       userStorySettingData({
         ...userStorySetting,
-        compliance: updatedLabels.join(","),
+        compliance: updatedLabels,
       })
     );
   };
 
-  // Load selectedLabels from local storage on component mount
-  useEffect(() => {
-    const storedLabels = localStorage.getItem("selectedLabelsStory");
-    if (storedLabels) {
-      setSelectedLabels(JSON.parse(storedLabels));
-    }
-  }, []);
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(
@@ -71,8 +62,12 @@ const UserStory = () => {
   };
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
-  const complianceLabels = useSelector((state) => state.userStorySetting.compliance.split(","));
-
+  const complianceLabels = useSelector((state) => state.userStorySetting.compliance);
+  useEffect(() => {
+    if (complianceLabels) {
+      setSelectedLabels(complianceLabels);
+    }
+  }, []);
   useEffect(() => {
     setFormData(userStorySetting);
   }, [userStorySetting]);
