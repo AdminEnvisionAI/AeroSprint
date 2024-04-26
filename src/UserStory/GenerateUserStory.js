@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./userStory.css";
 import { connect, useDispatch, useSelector } from "react-redux";
-import fetchData, { fetchFileUserStoryData, fetchRequirementsFromFilePath } from "./userStoryServices";
+import fetchData, { fetchFileUserStoryData, fetchUserStoryFromFilePath } from "./userStoryServices";
 import { startLoading, stopLoading } from "../reduxStore/actions";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -66,7 +66,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
   useEffect(() => {
     setIsLoading(true);
     if (file) {
-      fetchRequirementsFromFilePath(file, userStoryData, dispatch, userStorySetting) // Updated the parameter to use the value from the textarea
+      fetchUserStoryFromFilePath(file, userStoryData, dispatch, userStorySetting) // Updated the parameter to use the value from the textarea
         .then((data) => {
           setUserStoryData1(data);
         })

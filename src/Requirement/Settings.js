@@ -231,7 +231,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("ISO 27001")}
+                        checked={complianceLabels?.includes("ISO 27001")}
                         onChange={handleCheckboxChange}
                         name="ISO 27001"
                       />
@@ -241,7 +241,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("GDPR")}
+                        checked={complianceLabels?.includes("GDPR")}
                         onChange={handleCheckboxChange}
                         name="GDPR"
                       />
@@ -251,7 +251,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("WCAG 2.0 AA")}
+                        checked={complianceLabels?.includes("WCAG 2.0 AA")}
                         onChange={handleCheckboxChange}
                         name="WCAG 2.0 AA"
                       />
@@ -261,7 +261,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("PSD2")}
+                        checked={complianceLabels?.includes("PSD2")}
                         onChange={handleCheckboxChange}
                         name="PSD2"
                       />
@@ -271,7 +271,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("ADA")}
+                        checked={complianceLabels?.includes("ADA")}
                         onChange={handleCheckboxChange}
                         name="ADA"
                       />
@@ -281,7 +281,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("HIPAA")}
+                        checked={complianceLabels?.includes("HIPAA")}
                         onChange={handleCheckboxChange}
                         name="HIPAA"
                       />
@@ -291,7 +291,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("RBI")}
+                        checked={complianceLabels?.includes("RBI")}
                         onChange={handleCheckboxChange}
                         name="RBI"
                       />
@@ -301,7 +301,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("NIPL")}
+                        checked={complianceLabels?.includes("NIPL")}
                         onChange={handleCheckboxChange}
                         name="NIPL"
                       />
@@ -311,7 +311,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("NPCL")}
+                        checked={complianceLabels?.includes("NPCL")}
                         onChange={handleCheckboxChange}
                         name="NPCL"
                       />

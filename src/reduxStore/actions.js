@@ -20,7 +20,8 @@ export const ActionTypes = {
   US_COREAREA: "US_COREAREA",
   US_COMPLIANCE: "US_COMPLIANCE",
   US_KEYWORDS: "US_KEYWORDS",
-  US_CONFIGURATIONS: "US_CONFIGURATIONS",
+  US_DEVELOPMENTTYPE: "US_DEVELOPMENTTYPE",
+  US_GOALS: "US_GOALS",
 };
 
 export const startLoading = () => {
@@ -117,9 +118,16 @@ export const US_KEYWORDS = (data) => {
     payload: data,
   };
 };
-export const US_CONFIGURATIONS = (data) => {
+export const US_DEVELOPMENTTYPE = (data) => {
   return {
-    type: ActionTypes.US_CONFIGURATIONS,
+    type: ActionTypes.US_DEVELOPMENTTYPE,
+    payload: data,
+  };
+};
+
+export const US_GOALS = (data) => {
+  return {
+    type: ActionTypes.US_GOALS,
     payload: data,
   };
 };

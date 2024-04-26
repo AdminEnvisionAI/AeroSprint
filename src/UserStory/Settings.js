@@ -25,8 +25,25 @@ const UserStory = () => {
     corearea: "",
     compliance: [],
     keywords: "",
+    developmentType: "",
+    userstorygoals: ""
   });
   const industryOptions = [{ value: "BFSI", label: "BFSI" }];
+  const developmentType = [
+    { value: "Fresh", label: "Fresh" },
+    { value: "Enhancement", label: "Enhancement" },
+    { value: "Modernization", label: "Modernization" },
+    { value: "Integration", label: "Integration Only" }
+  ];
+  
+  const userstorygoals = [
+    { value: "Solving a Problem", label: "Solving a Problem" },
+    { value: "Improving Efficiency", label: "Improving Efficiency" },
+    { value: "Enhancing User Experience", label: "Enhancing User Experience" },
+    { value: "Enabling Innovation", label: "Enabling Innovation" },
+    { value: "Reporting solution", label: "Reporting solution" }
+];
+
   const handleCheckboxChange = (event) => {
     const label = event.target.name;
     const isChecked = event.target.checked;
@@ -52,6 +69,7 @@ const UserStory = () => {
   };
 
   const handleChange = (event) => {
+    console.log('userStorySetting ',userStorySetting)
     const { name, value } = event.target;
     dispatch(
       userStorySettingData({
@@ -93,6 +111,48 @@ const UserStory = () => {
             </div>
           </div>
           <div className="story-column-4">
+          <div className="setting_session_flex">
+              <div className="keywords_box">
+                <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "17%" }}>
+                  Development Type
+                </h5>
+                <Select
+                  name="developmentType"
+                  value={formData?.developmentType || userStorySetting?.developmentType}
+                  onChange={(event) => handleChange(event)}
+                  style={{ width: "29.4%" }}
+                  className="muiselect"
+                >
+                  <MenuItem value={0}>Select</MenuItem>
+                  {developmentType.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+           </div>
+           <div className="setting_session_flex">
+              <div className="keywords_box">
+                <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "17%" }}>
+                  Purpose and Goals
+                </h5>
+                <Select
+                  name="userystorygoals"
+                  value={formData?.userstorygoals || userStorySetting?.userstorygoals}
+                  onChange={(event) => handleChange(event)}
+                  style={{ width: "29.4%" }}
+                  className="muiselect"
+                >
+                  <MenuItem value={0}>Select</MenuItem>
+                  {userstorygoals.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+           </div>
             <div className="setting_session_flex">
               <div className="keywords_box">
                 <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "37%" }}>
@@ -222,7 +282,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("ISO 27001")}
+                        checked={complianceLabels?.includes("ISO 27001")}
                         onChange={handleCheckboxChange}
                         name="ISO 27001"
                       />
@@ -232,7 +292,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("GDPR")}
+                        checked={complianceLabels?.includes("GDPR")}
                         onChange={handleCheckboxChange}
                         name="GDPR"
                       />
@@ -242,7 +302,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("WCAG 2.0 AA")}
+                        checked={complianceLabels?.includes("WCAG 2.0 AA")}
                         onChange={handleCheckboxChange}
                         name="WCAG 2.0 AA"
                       />
@@ -252,7 +312,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("PSD2")}
+                        checked={complianceLabels?.includes("PSD2")}
                         onChange={handleCheckboxChange}
                         name="PSD2"
                       />
@@ -262,7 +322,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("ADA")}
+                        checked={complianceLabels?.includes("ADA")}
                         onChange={handleCheckboxChange}
                         name="ADA"
                       />
@@ -272,7 +332,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("HIPAA")}
+                        checked={complianceLabels?.includes("HIPAA")}
                         onChange={handleCheckboxChange}
                         name="HIPAA"
                       />
@@ -282,7 +342,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("RBI")}
+                        checked={complianceLabels?.includes("RBI")}
                         onChange={handleCheckboxChange}
                         name="RBI"
                       />
@@ -292,7 +352,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("NIPL")}
+                        checked={complianceLabels?.includes("NIPL")}
                         onChange={handleCheckboxChange}
                         name="NIPL"
                       />
@@ -302,7 +362,7 @@ const UserStory = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={complianceLabels.includes("NPCL")}
+                        checked={complianceLabels?.includes("NPCL")}
                         onChange={handleCheckboxChange}
                         name="NPCL"
                       />
