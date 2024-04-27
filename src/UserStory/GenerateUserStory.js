@@ -66,7 +66,11 @@ const UserStory = ({ startLoading, stopLoading }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (file) {
+    if (!file) {
+      alert("Please Select Requirement File");
+      setIsLoading(false);
+    }
+    else if (file) {
       fetchUserStoryFromFilePath(file, userStoryData, dispatch, userStorySetting) // Updated the parameter to use the value from the textarea
         .then((data) => {
           setUserStoryData1(data);
