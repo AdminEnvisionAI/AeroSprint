@@ -8,7 +8,7 @@ import "tippy.js/dist/tippy.css";
 import { Globalcontext } from "../App";
 import Button from "@mui/material/Button";
 
-const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
+const UserStory = ({ startLoading, stopLoading }) => {
   let { file } = useContext(Globalcontext);
 
   const [requirementinfo, setrequirementinfo] = useState(false);
@@ -19,6 +19,7 @@ const UserStory = ({ startLoading, stopLoading, userStoryData }) => {
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
   const requirementResponseResp = useSelector((state) => state.requirementResponse);
+  const userStoryData = useSelector((state) => state.userStoryData);
 
   // const handleDownload = () => {
   //   if (userStoryData) {

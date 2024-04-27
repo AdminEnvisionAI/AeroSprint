@@ -25,7 +25,7 @@ const UserStory = () => {
     corearea: "",
     compliance: [],
     keywords: "",
-    developmentType: "",
+    developmenttype: "",
     userstorygoals: ""
   });
   const industryOptions = [{ value: "BFSI", label: "BFSI" }];
@@ -36,7 +36,7 @@ const UserStory = () => {
     { value: "Integration", label: "Integration Only" }
   ];
   
-  const userstorygoals = [
+  const userStoryGoals = [
     { value: "Solving a Problem", label: "Solving a Problem" },
     { value: "Improving Efficiency", label: "Improving Efficiency" },
     { value: "Enhancing User Experience", label: "Enhancing User Experience" },
@@ -117,8 +117,8 @@ const UserStory = () => {
                   Development Type
                 </h5>
                 <Select
-                  name="developmentType"
-                  value={formData?.developmentType || userStorySetting?.developmentType}
+                  name="developmenttype"
+                  value={formData?.developmenttype || userStorySetting?.developmenttype}
                   onChange={(event) => handleChange(event)}
                   style={{ width: "29.4%" }}
                   className="muiselect"
@@ -138,14 +138,14 @@ const UserStory = () => {
                   Purpose and Goals
                 </h5>
                 <Select
-                  name="userystorygoals"
+                  name="userstorygoals"
                   value={formData?.userstorygoals || userStorySetting?.userstorygoals}
                   onChange={(event) => handleChange(event)}
                   style={{ width: "29.4%" }}
                   className="muiselect"
                 >
                   <MenuItem value={0}>Select</MenuItem>
-                  {userstorygoals.map((option) => (
+                  {userStoryGoals.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
@@ -200,7 +200,7 @@ const UserStory = () => {
                 <Select
                   name="subdomain"
                   value={userStorySetting?.subdomain || formData?.subdomain}
-                  onChange={handleChange}
+                  onChange={(event) => handleChange(event)}
                   className="muiselect"
                 >
                   <MenuItem value="Select">Select</MenuItem>
@@ -241,7 +241,7 @@ const UserStory = () => {
                   type="select"
                   name="corearea"
                   value={userStorySetting?.corearea || formData?.corearea}
-                  onChange={handleChange}
+                  onChange={(event) => handleChange(event)}
                   className="muiselect"
                   style={{ width: "65%", marginLeft: "0.3rem" }}
                 >

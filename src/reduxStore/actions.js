@@ -21,7 +21,7 @@ export const ActionTypes = {
   US_COMPLIANCE: "US_COMPLIANCE",
   US_KEYWORDS: "US_KEYWORDS",
   US_DEVELOPMENTTYPE: "US_DEVELOPMENTTYPE",
-  US_GOALS: "US_GOALS",
+  US_USERSTORYGOALS: "US_USERSTORYGOALS",
 };
 
 export const startLoading = () => {
@@ -125,9 +125,9 @@ export const US_DEVELOPMENTTYPE = (data) => {
   };
 };
 
-export const US_GOALS = (data) => {
+export const US_USERSTORYGOALS = (data) => {
   return {
-    type: ActionTypes.US_GOALS,
+    type: ActionTypes.US_USERSTORYGOALS,
     payload: data,
   };
 };

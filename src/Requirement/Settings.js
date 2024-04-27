@@ -149,7 +149,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                 <Select
                   name="subdomain"
                   value={requirementSetting?.subdomain || formData?.subdomain}
-                  onChange={handleChange}
+                  onChange={(event) => handleChange(event)}
                   className="muiselect"
                 >
                   <MenuItem value="Select">Select</MenuItem>
@@ -190,7 +190,7 @@ const Requirement = ({ startLoading, stopLoading }) => {
                   type="select"
                   name="corearea"
                   value={requirementSetting?.corearea || formData?.corearea}
-                  onChange={handleChange}
+                  onChange={(event) => handleChange(event)}
                   className="muiselect"
                   style={{ width: "65%", marginLeft: "0.3rem" }}
                 >

@@ -27,58 +27,6 @@ const fetchData = async (query, dispatch, userStorySetting) => {
   }
 };
 
-// export const fetchFileUserStoryData = async (
-//   file,
-//   context,
-//   dispatch,
-//   userStorySetting
-// ) => {
-//   if (!file) {
-//     return;
-//   }
-//   // const formData = new FormData();
-//   // formData.append("file", file);
-//   // // formData.append("keywords", "accessibility");
-//   // // formData.append("industry", "Banking");
-//   // // formData.append("compliances", "accessibility");
-
-//   // formData.append("keywords", userStorySetting.keywords);
-//   // formData.append("industry", userStorySetting.industry);
-//   // formData.append("compliances", userStorySetting.compliances);
-
-//   // formData.append("domain", userStorySetting.domain);
-//   // formData.append("subdomain", userStorySetting.subdomain);
-//   // formData.append("corearea", userStorySetting.corearea);
-
-//   const data = {
-//     file: file, // Assuming 'file' is a File object
-//     keywords: userStorySetting.keywords,
-//     industry: userStorySetting.industry,
-//     compliances: userStorySetting.compliance,
-//     domain: userStorySetting.domain,
-//     subdomain: userStorySetting.subdomain,
-//     corearea: userStorySetting.corearea,
-//   };
-
-//   // Convert the object to JSON string
-//   const jsonData = JSON.stringify(data);
-
-//   try {
-//     const response = await axios.post(
-//       "http://localhost:8000/file-upload-user-story",
-//       jsonData,
-//       {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
-//     dispatch(userstoryData(response.data.message));
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 export const fetchUserStoryFromFilePath = async (
   file,
   context,
