@@ -19,7 +19,7 @@ const UserStory = ({ startLoading, stopLoading }) => {
 
   const userStorySetting = useSelector((state) => state.userStorySetting);
   const requirementResponseResp = useSelector((state) => state.requirementResponse);
-  const userStoryData = useSelector((state) => state.userStoryData);
+  const userStoryData = useSelector((state) => state.userstoryResponse);
 
   // const handleDownload = () => {
   //   if (userStoryData) {

@@ -58,10 +58,14 @@ export const fetchUserStoryFromFilePath = async (
       const fileID = response.data.message; // Access the actual data from the response
 
       // Fetch additional requirements using the responseData (if applicable)
-      const userStories = await fetchRequirementsFileMetaData(dispatch, file.name, fileID, userStorySetting); // Pass appropriate data
+      // const userStoriesObj = 
+      await fetchRequirementsFileMetaData(dispatch, file.name, fileID, userStorySetting); // Pass appropriate data
 
-      // Dispatch action to update state with user stories
-      dispatch(userstoryData(userStories));
+      // const userStories = userStoriesObj.map(obj => obj.userStory);
+      // console.log('userStories ', userStories);
+        
+      // // Dispatch action to update state with user stories
+      // dispatch(userstoryData(userStories));
     } else {
       // Handle non-200 status codes from the upload endpoint
       console.error("Error uploading file:", response.statusText);
@@ -106,7 +110,18 @@ export const fetchRequirementsFileMetaData = async (
         },
       }
     );
-    dispatch(userstoryData(response.data.message));
+
+    console.log('response ', response);
+    const user_stories = [];
+    for (let item of response?.data) {
+      for (let story of item) {
+        user_stories.push(story["userStory"]);
+      }
+    }
+
+    console.log(user_stories);
+
+    dispatch(userstoryData(user_stories));
   } catch (error) {
     // handle error
     console.log(error);

@@ -8,7 +8,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import RequirementGeneration from "./Requirement/RequirementGeneration";
 import UserStoryGeneration from "./UserStory/UserStoryGeneration";
-import TestCase from "TestCase/testCase";
+import TestCasesGeneration from "TestCase/TestCasesGeneration";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -52,7 +52,7 @@ const routes = [
     key: "testcase",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/testcase",
-    component: <TestCase />,
+    component: <TestCasesGeneration />,
   },
   {
     type: "collapse",

@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./testcase.css";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { connect, useDispatch, useSelector } from "react-redux";
+import testCasefetchData from "./testCaseServices";
+
 function TestCase() {
   const [selectedOption, setSelectedOption] = useState("From User Story");
-  const [contextinfo, setcontextinfo] = useState(false);
+  const [testCasesData, setTestCasesData] = useState('');
   const [testinfo, settestinfo] = useState(false);
   const [settinginfo, setsettinginfo] = useState(false);
   const [generatedinfo, setgeneratedinfo] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+      testCasefetchData() // Updated the parameter to use the value from the textarea
+        .then((data) => {
+          setTestCasesData(data);
+          // setUserStoryData1(data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });   
+  }, [dispatch]); 
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -25,32 +39,13 @@ function TestCase() {
   };
 
   return (
-    <DashboardLayout>
-    <DashboardNavbar />
+  
     <div>
       <div className="container">
         <div className="row gx-0">
           <div className="col-12 testcase-column">
-            <div className="requirement_session" style={{ width: "100%" }}>
-              <div className="text_circle_box">
-                <h5 className="import_story_text">Context</h5>
-                <Tippy content="jep" visible={contextinfo}>
-                  <i
-                    className="uil uil-info-circle"
-                    onClick={() => {
-                      setcontextinfo(!contextinfo);
-                      setTimeout(() => {
-                        setcontextinfo(false);
-                      }, 2200);
-                    }}
-                  ></i>
-                </Tippy>
-              </div>
-              <div style={{ width: "100%" }}>
-                <textarea rows={2} style={{ width: "100%" }}></textarea>
-              </div>
-            </div>
-            <div>
+           
+          
               <div className="radio-main-box">
                 <div className="radio_subbox_requirment">
                   <input
@@ -91,7 +86,7 @@ function TestCase() {
                   </h6>
                 </div>
               </div>
-            </div>
+            
             <div
               className="upload_textarea_requirement"
               style={{ width: "100%" }}
@@ -110,9 +105,9 @@ function TestCase() {
                   ></i>
                 </Tippy>
               </div>
-              <textarea rows={2} style={{ width: "60%" }}></textarea>
-              <div className="upload_box" style={{ marginTop: "0.2rem" }}>
-                <label htmlFor="upload_label">
+              {/* <textarea rows={2} style={{ width: "60%" }}></textarea> */}
+              {/* <div className="upload_box" style={{ marginTop: "0.2rem" }}>
+                {/* <label htmlFor="upload_label">
                   <i
                     class="uil uil-upload"
                     style={{
@@ -128,10 +123,10 @@ function TestCase() {
                   id="upload_label"
                   hidden
                   onChange={handleFileUpload}
-                />
-              </div>
+                /> 
+              </div> */}
             </div>
-            <div className="setting_session" style={{ width: "100%" }}>
+            {/* <div className="setting_session" style={{ width: "100%" }}>
               <div className="setting_session_flex">
                 <div className="keywords_box">
                   <h5
@@ -154,8 +149,8 @@ function TestCase() {
                   type="number"
                   style={{ width: "30%", marginLeft: "0.8rem" }}
                 ></input>
-              </div>
-            </div>
+              </div> 
+            </div>*/}
             <div
               className="testcase_container_button"
               style={{ width: "100%", marginTop: "1rem",  display:'none' }}
@@ -174,12 +169,9 @@ function TestCase() {
                   ></i>
                 </Tippy>
               </div>
-              <div style={{display:'none'}} className="generate_tc">
-                <button>Generate Test Cases</button>
-              </div>
             </div>
-            <div style={{ marginTop: "0.8rem",  display:'none' }}>
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+            <div style={{ marginTop: "0.8rem"}}>
+              {/* <table style={{ borderCollapse: "collapse", width: "100%" }}>
                 <tbody>
                   {[...Array(4)].map((row, rowIndex) => (
                     <tr key={rowIndex}>
@@ -196,17 +188,18 @@ function TestCase() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table> */}
+             {testCasesData && <textarea value={testCasesData} rows={15} style={{ width: "100%" }}></textarea>}
             </div>
-            <div className="button_container" style={{ width: "100%" }}>
+            {/* <div className="button_container" style={{ width: "100%" }}>
               <button className="ps-4 pe-4">Download</button>
               <button className="ps-4 pe-4">Confirm</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
     </div>
-    </DashboardLayout>
+    // </DashboardLayout>
   );
 }
 
