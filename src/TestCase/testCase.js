@@ -6,6 +6,8 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import testCasefetchData from "./testCaseServices";
 import GridLayout from 'react-grid-layout';
 
+import Button from "@mui/material/Button";
+
 function TestCase() {
   const [selectedOption, setSelectedOption] = useState("From User Story");
   const [testCasesData, setTestCasesData] = useState([]);
@@ -18,7 +20,19 @@ function TestCase() {
     setSelectedOption(event.target.value);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   testCasefetchData() // Updated the parameter to use the value from the textarea
+  //     .then((data) => {
+  //       setTestCasesData(data);
+  //       // setUserStoryData1(data);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // }, [dispatch]);
+
+  const handleGenerateTC = (event) => {
     setIsLoading(true);
     testCasefetchData() // Updated the parameter to use the value from the textarea
       .then((data) => {
@@ -28,35 +42,26 @@ function TestCase() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [dispatch]);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && file.name.endsWith(".doc")) {
-      alert("File uploaded successfully");
-    } else {
-      alert("Please select a valid .doc file.");
-    }
   };
 
-  const renderHeader = (tableData) => {
-    if (tableData?.length === 0) return null; // Handle empty tables
+  // const renderHeader = (tableData) => {
+  //   if (tableData?.length === 0) return null; // Handle empty tables
 
-    const headers = Object.keys(tableData[0]);
-    return (
-      <>
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th key={header}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        </table>
-        </>
-        )
-      };
+  //   const headers = Object.keys(tableData[0]);
+  //   return (
+  //     <>
+  //     <table border="1" cellPadding="5">
+  //       <thead>
+  //         <tr>
+  //           {headers.map((header) => (
+  //             <th key={header}>{header}</th>
+  //           ))}
+  //         </tr>
+  //       </thead>
+  //       </table>
+  //       </>
+  //       )
+  //     };
 
   const renderTable = (tableData) => {
     if (tableData?.length === 0) return null; // Handle empty tables
@@ -95,9 +100,10 @@ function TestCase() {
   };
 
   return (
-    <div>
-       {isLoading && <div className="overlay"></div>}
+    <>
+     {isLoading && <div className="overlay"></div>}
     {isLoading && <div className="loader"></div>}
+    <div>      
       <div className="container">
         <div className="row gx-0">
           <div className="col-12 testcase-column">
@@ -140,7 +146,12 @@ function TestCase() {
                   File Upload
                 </h6>
               </div>
+              <br/>
             </div>
+            <div style={{height:'30px'}}></div>
+              <div>
+                <Button variant="contained" style={{color: 'white',background: 'linear-gradient(195deg, #49a3f1, #1A73E8)'}} onClick={handleGenerateTC} className="generate-button">Generate TestCases</Button>
+              </div>
             <div
               className="upload_textarea_requirement"
               style={{ width: "100%" }}
@@ -198,6 +209,7 @@ function TestCase() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
