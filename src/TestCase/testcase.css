@@ -68,3 +68,7 @@ label {
 .testcase-column .uil-info-circle {
   color: #4a4946 !important;
 }
+
+td > ul {
+  padding: 20px;
+}

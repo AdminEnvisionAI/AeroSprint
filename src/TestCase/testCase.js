@@ -40,7 +40,7 @@ function TestCase() {
   };
 
   const renderHeader = (tableData) => {
-    if (tableData.length === 0) return null; // Handle empty tables
+    if (tableData?.length === 0) return null; // Handle empty tables
 
     const headers = Object.keys(tableData[0]);
     return (
@@ -59,11 +59,18 @@ function TestCase() {
       };
 
   const renderTable = (tableData) => {
-    if (tableData.length === 0) return null; // Handle empty tables
+    if (tableData?.length === 0) return null; // Handle empty tables
 
     const headers = Object.keys(tableData[0]);
     return (
-      <table border="1" cellPadding="5">        
+      <table border="1" cellPadding="5">
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th key={header}>{header}</th>
+            ))}
+          </tr>
+        </thead>        
         <tbody>
           {tableData.map((row) => (
             <tr key={row.TestCaseID}>
@@ -134,13 +141,11 @@ function TestCase() {
                 </h6>
               </div>
             </div>
-
             <div
               className="upload_textarea_requirement"
               style={{ width: "100%" }}
             >
               <div className="text_circle_box">
-                <h5 className="import_story_text">Test Cases</h5>
                 <Tippy content="jep" visible={testinfo}>
                   <i
                     className="uil uil-info-circle"
@@ -152,10 +157,8 @@ function TestCase() {
                     }}
                   ></i>
                 </Tippy>
-              </div>
-            
-            </div>
-           
+              </div>            
+            </div>           
             <div
               className="testcase_container_button"
               style={{ width: "100%", marginTop: "1rem", display: 'none' }}
@@ -176,11 +179,18 @@ function TestCase() {
               </div>
             </div>
             <div style={{ marginTop: "0.8rem" }}>
-             <h2>Test Cases </h2>
-              {renderHeader(testCasesData[0])}
-              {testCasesData.map((table, index) => (
-                <div key={index}>                
-                  {renderTable(table)}
+              {testCasesData?.length > 0 && testCasesData.map((table, index) => (
+                  <div 
+                  key={index} 
+                  style={{ 
+                    fontSize: '0.8em', 
+                    width: '100%', 
+                    margin: 'auto' 
+                  }}
+                >                  
+                {table.length > 0 
+                &&  <h2>Test Cases for US: {index + 1} </h2> }
+                {table.length > 0 && renderTable(table)}
                 </div>
               ))}
             </div>
