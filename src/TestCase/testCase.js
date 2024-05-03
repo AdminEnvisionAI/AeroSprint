@@ -96,11 +96,11 @@ function TestCase() {
 
   return (
     <div>
+       {isLoading && <div className="overlay"></div>}
+    {isLoading && <div className="loader"></div>}
       <div className="container">
         <div className="row gx-0">
           <div className="col-12 testcase-column">
-
-
             <div className="radio-main-box">
               <div className="radio_subbox_requirment">
                 <input
@@ -188,9 +188,9 @@ function TestCase() {
                     margin: 'auto' 
                   }}
                 >                  
-                {table.length > 0 
+                {table?.length > 0 
                 &&  <h2>Test Cases for US: {index + 1} </h2> }
-                {table.length > 0 && renderTable(table)}
+                {table?.length > 0 && renderTable(table)}
                 </div>
               ))}
             </div>
