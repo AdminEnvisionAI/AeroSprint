@@ -149,9 +149,12 @@ function TestCase() {
               <br/>
             </div>
             <div style={{height:'30px'}}></div>
-              <div>
+              {/* <div>
                 <Button variant="contained" style={{color: 'white',background: 'linear-gradient(195deg, #49a3f1, #1A73E8)'}} onClick={handleGenerateTC} className="generate-button">Generate TestCases</Button>
-              </div>
+              </div> */}
+              <div className="button_container">
+            <Button variant="text" onClick={handleGenerateTC}>Generate TestCases</Button>
+            </div> 
             <div
               className="upload_textarea_requirement"
               style={{ width: "100%" }}
