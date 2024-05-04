@@ -194,17 +194,17 @@ function TestCase() {
             </div>
             <div style={{ marginTop: "0.8rem" }}>
               {testCasesData?.length > 0 && testCasesData.map((table, index) => (
-                  <div 
+                <div 
                   key={index} 
                   style={{ 
                     fontSize: '0.8em', 
                     width: '100%', 
                     margin: 'auto' 
                   }}
-                >                  
-                {table?.length > 0 
-                &&  <h2>Test Cases for US: {index + 1} </h2> }
-                {table?.length > 0 && renderTable(table)}
+                >           
+                  {table?.length > 0 
+                    &&  <h2>Test Cases for Requirement: <span style={{fontSize: 'Medium'}}>{table[0]?.Requirement} </span> </h2> }
+                  {table?.length > 0 && renderTable(table)}
                 </div>
               ))}
             </div>
