@@ -7,6 +7,8 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { Globalcontext } from "../App";
 import Button from "@mui/material/Button";
+// import { saveAs } from 'file-saver';
+// import { Document, Packer, Paragraph } from 'docx';
 
 const UserStory = ({ startLoading, stopLoading }) => {
   let { file } = useContext(Globalcontext);
@@ -25,13 +27,13 @@ const UserStory = ({ startLoading, stopLoading }) => {
     try {
       if (userStoryData) {
         // Ensure userStoryData is a UTF-8 string
-        const utf8Data = new TextEncoder().encode(userStoryData);
+        const utf8Data = new TextEncoder().encode(userStoryData?.map((story) => story));
   
         const blob = new Blob([utf8Data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'UserStory.docx';
+        a.download = 'userStory.docx';
         document.body.appendChild(a);
   
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -49,7 +51,7 @@ const UserStory = ({ startLoading, stopLoading }) => {
     }
   };
 
-  useEffect(() => {
+  const handleGenerateUS = (event) => {
     setIsLoading(true);
     if (!file) {
       alert("Please Select Requirement File");
@@ -72,7 +74,32 @@ const UserStory = ({ startLoading, stopLoading }) => {
           setIsLoading(false);
         });
     }
-  }, [dispatch, file, requirementResponseResp]); 
+  }
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   if (!file) {
+  //     alert("Please Select Requirement File");
+  //     setIsLoading(false);
+  //   }
+  //   else if (file) {
+  //     fetchUserStoryFromFilePath(file, userStoryData, dispatch, userStorySetting) // Updated the parameter to use the value from the textarea
+  //       .then((data) => {
+  //         setUserStoryData1(data);
+  //       })
+  //       .finally(() => {
+  //         setIsLoading(false);
+  //       });
+  //   } else if (requirementResponseResp){
+  //     fetchData(requirementResponseResp, dispatch, userStorySetting)
+  //       .then((data) => {
+  //         setUserStoryData1(data);
+  //       })
+  //       .finally(() => {
+  //         setIsLoading(false);
+  //       });
+  //   }
+  // }, [dispatch, file, requirementResponseResp]); 
 
   return (
     <>
@@ -81,6 +108,10 @@ const UserStory = ({ startLoading, stopLoading }) => {
       <div className="container">
         <div className="row gx-0">
           <div className="col-12 story-column">
+          <div className="button_container">
+            <Button variant="text" onClick={handleGenerateUS}>Generate User Story</Button>
+            <Button variant="text" onClick={handleDownload}>Download</Button>
+          </div> 
             <div className="story-column-last">
               <div className="text_circle_box" style={{ marginTop: "1rem" }}>
                 <h5 className="import_story_text">
@@ -105,9 +136,6 @@ const UserStory = ({ startLoading, stopLoading }) => {
                 onChange={()=>{}}
               ></textarea>
             </div>
-            <div className="button_container">
-            <Button variant="text" onClick={handleDownload}>Download</Button>
-            </div> 
           </div>
         </div>
       </div>
@@ -119,6 +147,7 @@ const mapStateToProps = (state) => {
   return {
     data: state.requirementResponse,
     userStoryData: state.userstoryResponse,
+    userStoryDataForTestCases: state.userstoryResponseForTestCases,
     loading: state.loading,
   };
 };

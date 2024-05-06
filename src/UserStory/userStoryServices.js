@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from "axios";
-import { userstoryData } from "../reduxStore/actions";
+import { userstoryData, userstoryDataForTestCase } from "../reduxStore/actions";
 
 const fetchData = async (query, dispatch, userStorySetting) => {
   console.log('userStorySetting ', userStorySetting)
@@ -21,6 +21,7 @@ const fetchData = async (query, dispatch, userStorySetting) => {
       data
     );
     dispatch(userstoryData(response.data.message));
+    dispatch(userstoryDataForTestCase(response.data.message));
     return response.data.message;
   } catch (error) {
     console.log(error);
@@ -112,6 +113,7 @@ export const fetchRequirementsFileMetaData = async (
     );
 
     console.log('response ', response);
+    dispatch(userstoryDataForTestCase(response.data));
     const user_stories = [];
     for (let item of response?.data) {
       for (let story of item) {

@@ -35,7 +35,9 @@ const initialState = {
   requirementResponse: "",
   // Add more state properties for user story here as needed
   userstoryResponse: "",
+  userstoryResponseForTestCases: "",
   uploadedUserstoryFile: null,
+  uploadedTestCasesFile: null,
   document: "",
   upload: "",
   loading: false,
@@ -63,6 +65,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userstoryResponse: action.payload, // Merge new data with existing data
       };
+      case ActionTypes.USERSTORY_DATA_TESTCASES:
+        return {
+          ...state,
+          userstoryResponseForTestCases: action.payload, // Merge new data with existing data
+        };
     case ActionTypes.CONTEXT_DATA:
       return {
         ...state,
@@ -83,6 +90,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         uploadedUserstoryFile: {
+          ...action.payload,
+        },
+      };
+    case ActionTypes.TESTCASE_FILE: 
+      return {
+        ...state,
+        uploadedTestCasesFile: {
           ...action.payload,
         },
       };

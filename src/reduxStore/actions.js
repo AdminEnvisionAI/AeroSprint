@@ -3,8 +3,12 @@ export const ActionTypes = {
   REQUIREMENT_RESPONSE: "REQUIREMENT_RESPONSE",
   REQUIREMENT: "REQUIREMENT",
   REQUIREMENT_FILE: "REQUIREMENT_FILE",
+  Testcase_FILE: "Testcase_FILE",
   USERSTORY_DATA: "USERSTORY_DATA",
+  USERSTORY_DATA_TESTCASES: "USERSTORY_DATA_TESTCASES",
+  TESTCASE_DATA: "TESTCASE_DATA",
   USERSTORY_FILE: "USERSTORY_FILE",
+  TESTCASE_FILE: "TESTCASE_FILE", // Added "TESTCASE_FILE" action type
   CONTEXT_DATA: "CONTEXT_DATA",
   START_LOADING: "START_LOADING",
   STOP_LOADING: "STOP_LOADING",
@@ -43,6 +47,14 @@ export const userstoryData = (data) => ({
   type: ActionTypes.USERSTORY_DATA,
   payload: data,
 });
+export const userstoryDataForTestCase = (data) => ({
+  type: ActionTypes.USERSTORY_DATA_TESTCASES,
+  payload: data,
+});
+export const testCaseData = (data) => ({
+  type: ActionTypes.TESTCASE_DATA,
+  payload: data,
+});
 export const contextData = (data) => ({
   type: ActionTypes.CONTEXT_DATA,
   payload: data,
@@ -72,6 +84,19 @@ export const uploadedRequirementFile = (file) => {
   } else {
     return {
       type: ActionTypes.REQUIREMENT_FILE,
+      payload: null,
+    };
+  }
+};
+export const uploadedTestCasesFile = (file) => {
+  if (file) {
+    return {
+      type: ActionTypes.Testcase_FILE,
+      payload: file,
+    };
+  } else {
+    return {
+      type: ActionTypes.Testcase_FILE,
       payload: null,
     };
   }

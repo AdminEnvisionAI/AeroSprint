@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "./testcase.css";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { connect, useDispatch, useSelector } from "react-redux";
-import testCasefetchData from "./testCaseServices";
-import GridLayout from 'react-grid-layout';
+import { Globalcontext } from "../App";
+import testCasefetchData, {testCasefetchFileData} from "./testCaseServices";
+import {
+  uploadedTestCasesFile
+} from "../reduxStore/actions";
 
 import Button from "@mui/material/Button";
 
-function TestCase() {
+const TestCase = () => {
   const [selectedOption, setSelectedOption] = useState("From User Story");
   const [testCasesData, setTestCasesData] = useState([]);
   const [testinfo, settestinfo] = useState(false);
-  const [settinginfo, setsettinginfo] = useState(false);
   const [generatedinfo, setgeneratedinfo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const testCasesFile = useSelector((state) => state.uploadedTestCasesFile);
+  let { getfile, file } = useContext(Globalcontext);
+  const userStoryData = useSelector((state) => state.userstoryResponseForTestCases);
   const dispatch = useDispatch();
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -34,70 +39,84 @@ function TestCase() {
 
   const handleGenerateTC = (event) => {
     setIsLoading(true);
-    testCasefetchData() // Updated the parameter to use the value from the textarea
+    if(selectedOption === "From User Story") {
+    testCasefetchData(userStoryData) // Updated the parameter to use the value from the textarea
       .then((data) => {
+        console.log(data);
         setTestCasesData(data);
-        // setUserStoryData1(data);
       })
       .finally(() => {
         setIsLoading(false);
       });
+    }
+    else {
+      console.log(file);
+      testCasefetchFileData(file, dispatch) // Updated the parameter to use the value from the textarea
+      .then((data) => {
+        setTestCasesData(data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    }
   };
 
-  // const renderHeader = (tableData) => {
-  //   if (tableData?.length === 0) return null; // Handle empty tables
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    getfile(file);
 
-  //   const headers = Object.keys(tableData[0]);
-  //   return (
-  //     <>
-  //     <table border="1" cellPadding="5">
-  //       <thead>
-  //         <tr>
-  //           {headers.map((header) => (
-  //             <th key={header}>{header}</th>
-  //           ))}
-  //         </tr>
-  //       </thead>
-  //       </table>
-  //       </>
-  //       )
-  //     };
+    if (file && (file.name.endsWith(".doc") || file.name.endsWith(".docx"))) {
+      alert("File uploaded successfully");
+    } else {
+      alert("Please select a valid .doc file.");
+      return false;
+    }
+    dispatch(uploadedTestCasesFile(file));
+  };
 
-  const renderTable = (tableData) => {
-    if (tableData?.length === 0) return null; // Handle empty tables
+const renderTable = (tableData) => {
+  if (tableData?.length === 0) return null; // Handle empty tables
 
-    const headers = Object.keys(tableData[0]);
-    return (
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th key={header}>{header}</th>
+  const headers = Object.keys(tableData[0]);
+  return (
+    <table border="1" cellPadding="5">
+      <thead>
+        <tr>
+          {headers.map((header) => (
+            <th key={header}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {tableData?.map((row) => (
+          <tr key={row.TestCaseID}>
+            {/* Wrap first cell in anchor tag */}
+            <td key={`first-cell-${row.TestCaseID}`}>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                {row[headers[0]]}
+              </a>
+            </td>
+            {/* No need to iterate through headers for other columns */}
+            {/* Rest of the cells can be rendered normally */}
+            {headers.slice(1).map((header) => (
+              <td key={`${row.TestCaseID}-${header}`}>
+                {Array.isArray(row[header]) ? (
+                  <ul>
+                    {row[header].map((item, index) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  row[header]
+                )}
+              </td>
             ))}
           </tr>
-        </thead>        
-        <tbody>
-          {tableData.map((row) => (
-            <tr key={row.TestCaseID}>
-              {headers.map((header) => (
-                <td key={`${row.TestCaseID}-${header}`}>
-                  {Array.isArray(row[header]) ? (
-                    <ul>
-                      {row[header].map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    row[header]
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
   return (
     <>
@@ -143,15 +162,20 @@ function TestCase() {
                     marginTop: "0.5rem",
                   }}
                 >
-                  File Upload
+                  File 
                 </h6>
               </div>
+             { selectedOption === "File Upload" && <div>
+                <input
+                  type="file"
+                  id="upload_label"
+                  onChange={handleFileUpload}
+                />
+                {testCasesFile ? testCasesFile.name : ""}
+              </div>}
               <br/>
             </div>
             <div style={{height:'30px'}}></div>
-              {/* <div>
-                <Button variant="contained" style={{color: 'white',background: 'linear-gradient(195deg, #49a3f1, #1A73E8)'}} onClick={handleGenerateTC} className="generate-button">Generate TestCases</Button>
-              </div> */}
               <div className="button_container">
             <Button variant="text" onClick={handleGenerateTC}>Generate TestCases</Button>
             </div> 
