@@ -67,11 +67,8 @@ const TestCase = () => {
   const handleDownload = () => {
     try {
       if (testCasesResponse) {
-        const worksheet = XLSX.utils.json_to_sheet(testCasesResponse.flat());
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Test Cases');
-        const excelBuffer = XLSX.write(workbook, { bookType: 'csv', type: 'array' });
-        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const csvData = convertToCSV(testCasesResponse);
+        const blob = new Blob([csvData], { type: 'text/csv' });
         saveAs(blob, 'test_cases.csv');
       } else {
         alert("No data to download");
@@ -79,6 +76,34 @@ const TestCase = () => {
     } catch (error) {
       console.error("An error occurred during the download process: ", error);
     }
+  };
+
+  const convertToCSV = (data) => {
+    const headers = Object.keys(data[0][0]);
+    const csvRows = [];
+    csvRows.push(headers.join(','));
+
+    data?.forEach((row) => {
+      row?.forEach((item) => {
+        const values = headers?.map((header) => item?.[header]);
+        const tempList = [];
+        values.forEach((value) => {
+          if (Array.isArray(value)) {
+            const formattedString = value.map((item, index) => `${index + 1}. ${item}`).join(' ');
+            tempList.push(formattedString);
+          }
+          else {
+          tempList.push(value);
+          }
+          
+        });
+        csvRows.push(tempList?.join(','));
+      })
+      // const values = headers?.map((header) => row?.[index]?.[header]);
+      // csvRows.push(values?.join(','));
+    });
+
+    return csvRows.join('\n');
   };
 
 const renderTable = (tableData) => {
