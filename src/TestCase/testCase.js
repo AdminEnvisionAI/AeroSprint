@@ -11,7 +11,7 @@ import {
 import Button from "@mui/material/Button";
 
 const TestCase = () => {
-  const [selectedOption, setSelectedOption] = useState("From User Story");
+  const [selectedOption, setSelectedOption] = useState("File Upload");
   const [testCasesData, setTestCasesData] = useState([]);
   const [testinfo, settestinfo] = useState(false);
   const [generatedinfo, setgeneratedinfo] = useState(false);
@@ -73,13 +73,13 @@ const renderTable = (tableData) => {
     <table border="1" cellPadding="5">
       <thead>
         <tr>
-          {headers.map((header) => (
+          {headers.map((header, index) => (
             <th key={header}>{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {tableData?.map((row) => (
+        {tableData?.map((row) => ( 
           <tr key={row.TestCaseID}>
             {/* Wrap first cell in anchor tag */}
             <td key={`first-cell-${row.TestCaseID}`}>
@@ -93,7 +93,7 @@ const renderTable = (tableData) => {
               <td key={`${row.TestCaseID}-${header}`}>
                 {Array.isArray(row[header]) ? (
                   <ul>
-                    {row[header].map((item, index) => (
+                    {row[header].map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
