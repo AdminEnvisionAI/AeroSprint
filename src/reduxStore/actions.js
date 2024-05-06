@@ -6,6 +6,7 @@ export const ActionTypes = {
   Testcase_FILE: "Testcase_FILE",
   USERSTORY_DATA: "USERSTORY_DATA",
   USERSTORY_DATA_TESTCASES: "USERSTORY_DATA_TESTCASES",
+  TESTCASES_RESPONSE: "TESTCASES_RESPONSE",
   TESTCASE_DATA: "TESTCASE_DATA",
   USERSTORY_FILE: "USERSTORY_FILE",
   TESTCASE_FILE: "TESTCASE_FILE", // Added "TESTCASE_FILE" action type
@@ -52,7 +53,7 @@ export const userstoryDataForTestCase = (data) => ({
   payload: data,
 });
 export const testCaseData = (data) => ({
-  type: ActionTypes.TESTCASE_DATA,
+  type: ActionTypes.TESTCASES_RESPONSE,
   payload: data,
 });
 export const contextData = (data) => ({

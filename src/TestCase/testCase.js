@@ -8,7 +8,6 @@ import testCasefetchData, {testCasefetchFileData} from "./testCaseServices";
 import {
   uploadedTestCasesFile
 } from "../reduxStore/actions";
-
 import Button from "@mui/material/Button";
 
 const TestCase = () => {
@@ -20,24 +19,15 @@ const TestCase = () => {
   const testCasesFile = useSelector((state) => state.uploadedTestCasesFile);
   let { getfile, file } = useContext(Globalcontext);
   const userStoryData = useSelector((state) => state.userstoryResponseForTestCases);
+  const testCasesResponse = useSelector((state) => state.testCasesResponse);
   const dispatch = useDispatch();
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   testCasefetchData() // Updated the parameter to use the value from the textarea
-  //     .then((data) => {
-  //       setTestCasesData(data);
-  //       // setUserStoryData1(data);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // }, [dispatch]);
-
   const handleGenerateTC = (event) => {
+    if(event.target.value) 
+      {
     setIsLoading(true);
     if(selectedOption === "From User Story") {
     testCasefetchData(userStoryData) // Updated the parameter to use the value from the textarea
@@ -59,6 +49,7 @@ const TestCase = () => {
         setIsLoading(false);
       });
     }
+  }
   };
 
   const handleFileUpload = (event) => {
@@ -217,7 +208,7 @@ const renderTable = (tableData) => {
               </div>
             </div>
             <div style={{ marginTop: "0.8rem" }}>
-              {testCasesData?.length > 0 && testCasesData.map((table, index) => (
+              {testCasesResponse?.length > 0 && testCasesResponse.map((table, index) => (
                 <div 
                   key={index} 
                   style={{ 
@@ -227,7 +218,7 @@ const renderTable = (tableData) => {
                   }}
                 >           
                   {table?.length > 0 
-                    &&  <h2>Test Cases for Requirement: <span style={{fontSize: 'Medium'}}>{table[0]?.Requirement} </span> </h2> }
+                    &&  <h2>Test Cases for Requirement: <span style={{fontSize: 'Medium'}}>{table[0]?.Requirement} </span> </h2> } 
                   {table?.length > 0 && renderTable(table)}
                 </div>
               ))}

@@ -27,7 +27,7 @@ const testCasefetchData = async (userStoryData) => {
         }
     );
 
-    // dispatch(userstoryData(response.data.message));
+    dispatch(testCaseData(response.data.message));
     console.log(response.data)
     return response.data;
   } catch (error) {
@@ -114,6 +114,7 @@ export const generateTestCasesUserStoryFile = async (
     //   }
     // }
     // dispatch(testCaseData(test_cases));
+    dispatch(testCaseData(response?.data));
     return response?.data;
   } catch (error) {
     // handle error

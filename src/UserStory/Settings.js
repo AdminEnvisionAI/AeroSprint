@@ -111,7 +111,7 @@ const UserStory = () => {
             </div>
           </div>
           <div className="story-column-4">
-          <div className="setting_session_flex">
+          {/* <div className="setting_session_flex">
               <div className="keywords_box">
                 <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "17%" }}>
                   Development Type
@@ -152,7 +152,7 @@ const UserStory = () => {
                   ))}
                 </Select>
               </div>
-           </div>
+           </div> */}
             <div className="setting_session_flex">
               <div className="keywords_box">
                 <h5 className="import_story_text" style={{ marginTop: "0.5rem", width: "37%" }}>
