@@ -9,6 +9,8 @@ import {
   uploadedTestCasesFile
 } from "../reduxStore/actions";
 import Button from "@mui/material/Button";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const TestCase = () => {
   const [selectedOption, setSelectedOption] = useState("File Upload");
@@ -60,6 +62,23 @@ const TestCase = () => {
       return false;
     }
     dispatch(uploadedTestCasesFile(file));
+  };
+
+  const handleDownload = () => {
+    try {
+      if (testCasesResponse) {
+        const worksheet = XLSX.utils.json_to_sheet(testCasesResponse.flat());
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Test Cases');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'csv', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'test_cases.csv');
+      } else {
+        alert("No data to download");
+      }
+    } catch (error) {
+      console.error("An error occurred during the download process: ", error);
+    }
   };
 
 const renderTable = (tableData) => {
@@ -166,6 +185,7 @@ const renderTable = (tableData) => {
             <div style={{height:'30px'}}></div>
               <div className="button_container">
             <Button variant="text" onClick={handleGenerateTC}>Generate TestCases</Button>
+            <Button variant="text" onClick={handleDownload}>Download</Button>
             </div> 
             <div
               className="upload_textarea_requirement"
