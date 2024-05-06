@@ -26,8 +26,6 @@ const TestCase = () => {
   };
 
   const handleGenerateTC = (event) => {
-    if(event.target.value) 
-      {
     setIsLoading(true);
     if(selectedOption === "From User Story") {
     testCasefetchData(userStoryData) // Updated the parameter to use the value from the textarea
@@ -49,7 +47,6 @@ const TestCase = () => {
         setIsLoading(false);
       });
     }
-  }
   };
 
   const handleFileUpload = (event) => {
