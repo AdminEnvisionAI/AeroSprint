@@ -9,12 +9,13 @@ import {
   uploadedTestCasesFile
 } from "../reduxStore/actions";
 import Button from "@mui/material/Button";
-import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import testScriptfetchData from "../TestScript/testScriptServices";
 
 const TestCase = () => {
   const [selectedOption, setSelectedOption] = useState("File Upload");
   const [testCasesData, setTestCasesData] = useState([]);
+  const [testScriptData, setTestScriptData] = useState('');  
   const [testinfo, settestinfo] = useState(false);
   const [generatedinfo, setgeneratedinfo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,17 +95,38 @@ const TestCase = () => {
           }
           else {
           tempList.push(value);
-          }
-          
+          }          
         });
         csvRows.push(tempList?.join(','));
       })
-      // const values = headers?.map((header) => row?.[index]?.[header]);
-      // csvRows.push(values?.join(','));
     });
 
     return csvRows.join('\n');
   };
+
+const handleAnchorClick = (testCaseID) => {
+  setIsLoading(true);
+  let testCaseDetail = testCasesResponse.find(item => item).find(y => y.TestCaseID === testCaseID);
+  testScriptfetchData(testCaseDetail)
+    .then((data) => {
+      setTestScriptData(data);
+      const scriptContent = data; // Generate the script content
+      const scriptBlob = new Blob([scriptContent], { type: 'text/plain' }); // Create a Blob with the script content
+      const scriptURL = URL.createObjectURL(scriptBlob); // Create a URL for the script Blob
+      const anchor = document.createElement('a'); // Create a new anchor element
+      anchor.href = scriptURL; // Set the href attribute to the script URL
+      anchor.download = 'test_script_'+testCaseID+'.py'; // Set the download attribute to the desired file name
+      anchor.click(); // Programmatically click the anchor to initiate the download
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+}
+
+const generateScriptContent = (data) => {
+  // Generate the script content based on the data object
+  // Return the script content as a string
+}
 
 const renderTable = (tableData) => {
   if (tableData?.length === 0) return null; // Handle empty tables
@@ -114,17 +136,17 @@ const renderTable = (tableData) => {
     <table border="1" cellPadding="5">
       <thead>
         <tr>
-          {headers.map((header, index) => (
+          {headers.map((header) => (
             <th key={header}>{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {tableData?.map((row) => ( 
+        {tableData?.map((row) => (      
           <tr key={row.TestCaseID}>
             {/* Wrap first cell in anchor tag */}
             <td key={`first-cell-${row.TestCaseID}`}>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="#" target="" rel="noopener noreferrer"  onClick={() => handleAnchorClick(row[headers[0]])}>
                 {row[headers[0]]}
               </a>
             </td>
@@ -147,7 +169,7 @@ const renderTable = (tableData) => {
         ))}
       </tbody>
     </table>
-  );
+  );  
 };
 
   return (
